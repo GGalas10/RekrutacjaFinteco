@@ -1,0 +1,6 @@
+<h1>Lista pracowników</h1>
+<mat-selection-list>
+@for (user of userList; track $index){
+   <mat-list-option>{{$index+1}}. {{user.name}}</mat-list-option>
+}
+</mat-selection-list>
