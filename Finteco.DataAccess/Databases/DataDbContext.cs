@@ -10,8 +10,32 @@ namespace Finteco.DataAccess.Databases
         {
             optionsBuilder.UseInMemoryDatabase("MyDatabase");
         }
-        public DbSet<DeploymentTask> DeploymentTasks { get; set; }
-        public DbSet<MaintenanceTask> MaintenanceTasks { get; set; }
-        public DbSet<ImplementationTask> ImplementationTasks { get; set; }
+        public DbSet<BaseTask> Tasks { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<BaseTask>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<ImplementationTask>("Implementation")
+                .HasValue<DeploymentTask>("Deployment")
+                .HasValue<MaintenanceTask>("Maintenance");
+
+            modelBuilder.Entity<ImplementationTask>()
+                .Property(t => t.TaskDescription)
+                .HasMaxLength(1000);
+
+            modelBuilder.Entity<DeploymentTask>()
+                .Property(t => t.DeploymentScope)
+                .HasMaxLength(400);
+
+            modelBuilder.Entity<MaintenanceTask>()
+                .Property(t => t.ServiceList)
+                .HasMaxLength(400);
+
+            modelBuilder.Entity<MaintenanceTask>()
+                .Property(t => t.ServerList)
+                .HasMaxLength(400);
+        }
     }
 }

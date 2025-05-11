@@ -1,0 +1,32 @@
+<section>
+    <div *ngIf="task;else emptyTask">
+        <h1>Szczegóły zadania</h1>
+        <p>Tytuł: {{task.title}}</p>
+        <p>Status: {{GetStatusName(task.status)}}</p>
+        <p>Typ: {{task.type}}</p>
+        <p>Trudność zadania (1-5): {{task.difficult}}</p>
+        <div [ngSwitch]="task.type">
+
+
+            <div *ngSwitchCase="'Implementacja'">
+                <p style="text-wrap: balance;">Opis: {{ task.taskDescription }}</p>
+            </div>
+
+
+            <div *ngSwitchCase="'Wdrożenie'">
+                <p>Termin: {{ task.deadline | date: 'dd.MM.yyyy' }}</p>
+                <p style="text-wrap: balance;">Zakres wdrożenia: {{ task.deploymentScope }}</p>
+            </div>
+
+
+            <div *ngSwitchCase="'Maintanance'">
+                <p>Termin: {{ task.deadline | date: 'dd.MM.yyyy' }} </p>
+                <p style="text-wrap: balance;">Usługi:{{ task.serviceList }} </p>
+                <p style="text-wrap: balance;">Serwery: {{ task.serverList }}</p>
+            </div>
+
+        </div>
+    </div>
+    <button mat-flat-button (click)="exitEmitter.emit()" style="margin-top: 15px;">Zamknij</button>
+    <ng-template #emptyTask></ng-template>
+</section>

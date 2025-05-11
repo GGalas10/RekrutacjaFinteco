@@ -1,0 +1,45 @@
+<section class="MainSectionTasks">
+    <p class="ExitBtn" (click)="CloseEvent()">X</p>
+    <h1>Zadania użytkownika <br><b>{{user.name}}</b></h1>
+    <section class="TaskSection">
+        @if (userTasks) {
+            <div class="TaskList">
+                <h3>Zadania użytkownika</h3>
+                @for (task of userTasks; track $index) {
+                    <mat-list-item (click)="onDetailsClick(task.taskId,$event)" matTooltip="Szczegóły zadania" role="button">
+                        <div matListItemTitle>{{$index+1}}. {{ task.title }} <span [ngClass]="getDifficultyClass(task.difficult)">({{ task.difficult }})</span></div>
+                    </mat-list-item>
+                }
+                <div class="pagination-buttons">
+                    <button mat-button (click)="previousPage(true)" [disabled]="userPage === 0">Poprzednia</button>
+                    <span>Strona {{ userPage + 1 }} z {{ userMaxPage }}</span>
+                    <button mat-button (click)="nextPage(true)" [disabled]="userPage >= userMaxPage - 1">Następna</button>
+                </div>
+            </div>
+        }
+        @if (availableTasks) {
+            <div class="TaskList">             
+                <h3>Zadania do przypisania</h3>
+                <mat-selection-list #taskList (selectionChange)="onSelectionChange(taskList.selectedOptions.selected)" >
+                    <mat-list-option *ngFor="let task of availableTasks" [value]="task.taskId">
+                        <div class="DetailsIcon" (click)="onDetailsClick(task.taskId,$event)" matTooltip="Szczegóły zadania">
+                            <svg width="28" height="28" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none">
+                            <circle cx="28" cy="28" r="16" stroke="#000" stroke-width="4"/>
+                            <line x1="41" y1="41" x2="60" y2="60" stroke="#000" stroke-width="4" stroke-linecap="round"/>
+                            <text x="28" y="32" text-anchor="middle" font-size="16" fill="#000" font-family="Arial">i</text>
+                            </svg>
+                        </div>
+                        {{ task.title }} <span [ngClass]="getDifficultyClass(task.difficult)">({{ task.difficult }})</span> Typ: {{getTaskTypeShort(task.type)}}
+                    </mat-list-option>
+                </mat-selection-list>
+                <div class="pagination-buttons">
+                    <button mat-button (click)="previousPage(false)" [disabled]="taskPage === 0">Poprzednia</button>
+                    <span>Strona {{ taskPage + 1 }} z {{ taskMaxPage }}</span>
+                    <button mat-button (click)="nextPage(false)" [disabled]="taskPage >= taskMaxPage - 1">Następna</button>
+                </div>
+            </div>
+        }
+    </section>
+    <button mat-raised-button class="SubmitBtn" (click)="OnSubmit()" [disabled]="RequestIsSend">Przypisz użytkownikowi zadania</button>
+</section>
+<app-task-details *ngIf="showTaskDetails" [taskId]="taskId" (exitEmitter)="closeDetails()"></app-task-details>

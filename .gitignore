@@ -361,3 +361,55 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Angular build output
+/dist/
+/out-tsc/
+/.angular/
+
+# Node dependencies
+/node_modules/
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Compiled files
+*.js
+*.js.map
+*.tsbuildinfo
+
+# Logs and temp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+.env
+.env.*.local
+
+# Angular config cache
+.angular/cache/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Testing
+/coverage/
+/test-output/
+
+# Misc
+*.log
+*.bak
+*.swp
+*.tmp
+
+# Optional: ignore environment files if secrets are there
+# Uncomment if needed:
+/src/environments/environment*.ts

@@ -1,0 +1,21 @@
+section{
+    width: 500px;
+    background-color: #243a51ba;
+    z-index: 5;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 40%;
+    left: 40%;
+    padding: 25px;
+    border-radius: 14px;
+    top: 5%;
+    backdrop-filter: blur(10px);
+}
+div{
+    display: grid;
+    text-align: center;
+}
+p{
+    margin:5px;
+}

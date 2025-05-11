@@ -9,10 +9,10 @@ namespace Finteco_Core.Domain.Tasks
         public string ServiceList { get; private set; }
         public string ServerList { get; private set; }
         private MaintenanceTask() : base() { }
-        public MaintenanceTask(DateTime deadline, string serviceList, string serverList, TypeEnum type, int difficult):base(type, difficult)
+        public MaintenanceTask(DateTime deadline, string serviceList, string serverList, int difficult, string title) : base(difficult, title)
         {
             SetDeadline(deadline);
-            SetServerList(serviceList);
+            SetServiceList(serviceList);
             SetServerList(serverList);
         }
         public void SetDeadline(DateTime deadline)
@@ -41,13 +41,13 @@ namespace Finteco_Core.Domain.Tasks
 
             ServerList = serverList;
         }
-        public bool UpdateMaintenanceTask(DateTime? deadline, string?  serviceList, string? serverList, TypeEnum? type, StatusEnum? status, int? difficult, string? title)
+        public bool UpdateMaintenanceTask(DateTime? deadline, string?  serviceList, string? serverList, StatusEnum? status, int? difficult, string? title)
         {
             var anyChanges = false;
             anyChanges = deadline == null ? false : ChangeDeadLine(deadline.Value);
             anyChanges = serviceList == null ? false : ChangeServiceList(serviceList);
             anyChanges = serverList == null ? false : ChangeServerList(serverList);
-            anyChanges = base.UpdateBaseTask(type, status, difficult, title);
+            anyChanges = base.UpdateBaseTask(status, difficult, title);
             return anyChanges;
         }
         private bool ChangeDeadLine(DateTime deadline)

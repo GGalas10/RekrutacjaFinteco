@@ -7,26 +7,17 @@ namespace Finteco_Core.Domain.Tasks
     public class BaseTask
     {
         public Guid Id { get; set; }
-        public TypeEnum Type { get; private set; }
         public StatusEnum Status { get; private set; }
         public int Difficult { get; private set; }
         public string Title { get; private set; }
         public Guid? UserId { get; private set; }
-        public User? User { get; private set; }
         public BaseTask(){}
-        public BaseTask(TypeEnum type, int difficult)
+        public BaseTask(int difficult,string title)
         {
             Id = Guid.NewGuid();
-            Type = type;
             Status = StatusEnum.ToDo;
-            Difficult = difficult;
-        }
-        public void SetType(TypeEnum type)
-        {
-            if (Type == type)
-                throw new BadRequestException("Cannot_Set_The_Same_Type");
-
-            Type = type;
+            SetDifficult(difficult);
+            SetTitle(title);
         }
         public void SetStatus(StatusEnum status)
         {
@@ -63,26 +54,13 @@ namespace Finteco_Core.Domain.Tasks
 
             UserId = userId;
         }
-        public bool UpdateBaseTask(TypeEnum? type,StatusEnum? status, int? difficult, string? title)
+        public bool UpdateBaseTask(StatusEnum? status, int? difficult, string? title)
         {
             var anyChanges = false;
-            anyChanges = type == null? false : ChangeType(type.Value);
             anyChanges = status == null ? false : ChangeStatus(status.Value);
             anyChanges = difficult == null ? false : ChangeDifficult(difficult.Value);
             anyChanges = title == null ? false : ChangeTitle(title);
             return anyChanges;
-        }
-        private bool ChangeType(TypeEnum type)
-        {
-            try
-            {
-                SetType(type);
-                return true;
-            }
-            catch 
-            {
-                return false;
-            }
         }
         private bool ChangeStatus(StatusEnum status)
         {

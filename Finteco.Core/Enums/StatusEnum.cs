@@ -2,7 +2,7 @@
 {
     public enum StatusEnum
     {
-        Done,
+        Done = 0,
         ToDo = 1
     }
 }

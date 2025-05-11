@@ -5,6 +5,7 @@ namespace Finteco.Application.Contracts
 {
     public interface ITaskService
     {
-        Task<List<TaskListDTO>> GetAllTasksToAssignByUserType(UserTypeEnum type);
+        Task<PagginationTaskListDTO> GetAllTasksToAssignByUserType(UserTypeEnum type, int page);
+        Task<TaskDetailsDTO> GetTaskDetails(Guid taskId);
     }
 }

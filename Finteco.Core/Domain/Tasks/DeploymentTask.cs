@@ -8,7 +8,7 @@ namespace Finteco_Core.Domain.Tasks
         public DateTime Deadline { get; private set; }
         public string DeploymentScope { get; private set; }
         private DeploymentTask() : base() { }
-        public DeploymentTask(DateTime deadline, string deploymentScope,TypeEnum type, int difficult) : base(type, difficult)
+        public DeploymentTask(DateTime deadline, string deploymentScope, int difficult, string title) : base(difficult,title)
         {
             SetDeadline(deadline);
             SetDeploymentScope(deploymentScope);
@@ -29,13 +29,13 @@ namespace Finteco_Core.Domain.Tasks
                 throw new BadRequestException("Deadline_Cannot_Be_Earlier_Than_Today");
             Deadline = deadline;
         }
-        public bool UpdateDeploymentTask(string? deploymentTask, DateTime? deadline, TypeEnum? type, StatusEnum? status, int? difficult, string? title)
+        public bool UpdateDeploymentTask(string? deploymentTask, DateTime? deadline, StatusEnum? status, int? difficult, string? title)
         {
             
             var anyChanges = false;
             anyChanges = deploymentTask == null ? false : ChangeScope(deploymentTask);
             anyChanges = deadline == null ? false : ChangeDeadline(deadline.Value);
-            anyChanges = base.UpdateBaseTask(type, status, difficult, title);
+            anyChanges = base.UpdateBaseTask( status, difficult, title);
             return anyChanges;
         }
         private bool ChangeScope(string scope)

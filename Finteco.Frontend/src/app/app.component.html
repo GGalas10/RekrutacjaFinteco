@@ -1,6 +1,30 @@
+<section class="AppComponentSection">
 <h1>Lista pracowników</h1>
-<mat-selection-list>
-@for (user of userList; track $index){
-   <mat-list-option>{{$index+1}}. {{user.name}}</mat-list-option>
-}
-</mat-selection-list>
+<section class="MainSection">
+      @if (userList){
+         <mat-selection-list class="UserList">
+            <div mat-subheader class="UserTypeDiv">Programiści:</div>
+            @for (user of GetProgrammers(); track $index){
+               <div matListItemTitle class="OneUser" (click)="SelectUser(user)" [ngClass]="{'ActiveUser': IsSelected(user.userId)}">{{user.name}}</div>
+            }
+         </mat-selection-list>
+         <mat-selection-list class="UserList">
+            <div mat-subheader class="UserTypeDiv">DevOps/<br>Administratorzy</div>
+            @for (devops of GetDevOps();track $index){
+               <div matListItemTitle class="OneUser" (click)="SelectUser(devops)" [ngClass]="{'ActiveUser': IsSelected(devops.userId)}">{{devops.name}}</div>
+            }
+         </mat-selection-list>
+      }@else{
+         @if(!ApiResponded){
+            <mat-spinner></mat-spinner>
+         }@else{
+            @if(userList == undefined){
+               <h2>Nie udało się pobrać użytkowników</h2>
+            }@else{
+               <h2>Brak użytkowników w bazie danych</h2>
+            }
+         }  
+      }
+</section>
+<app-user-details *ngIf="showDetails" [user]="selectedUser" (exitEmitter)="showDetails = false"></app-user-details>
+</section>

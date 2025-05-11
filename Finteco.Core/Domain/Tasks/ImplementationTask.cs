@@ -7,7 +7,7 @@ namespace Finteco_Core.Domain.Tasks
     {
         public string TaskDescription { get; private set; }
         private ImplementationTask() : base() { }
-        public ImplementationTask(string taskDescription, TypeEnum type, int difficult) : base(type,difficult)
+        public ImplementationTask(string taskDescription, int difficult, string title) : base(difficult, title)
         {
             SetTaskDescription(taskDescription);
         }
@@ -21,11 +21,11 @@ namespace Finteco_Core.Domain.Tasks
 
             TaskDescription = taskDescription;
         }
-        public bool UpdateImplementationTask(string? taskDescription, TypeEnum? type, StatusEnum? status, int? difficult, string? title)
+        public bool UpdateImplementationTask(string? taskDescription, StatusEnum? status, int? difficult, string? title)
         {
             var anyChanges = false;
             anyChanges = string.IsNullOrWhiteSpace(taskDescription) ? false : ChangeTaskDescription(taskDescription);
-            anyChanges = base.UpdateBaseTask(type, status, difficult, title);
+            anyChanges = base.UpdateBaseTask(status, difficult, title);
             return anyChanges;
         }
         private bool ChangeTaskDescription(string taskDescription)

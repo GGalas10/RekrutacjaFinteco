@@ -15,6 +15,13 @@ namespace Finteco_Core.Domain.Users
             SetName(name);
             SetUserType(userType);
         }
+        public User(Guid userId, string name, UserTypeEnum userType)
+        {
+            Id = userId;
+            SetName(name);
+            SetUserType(userType);
+        }
+        
         public void SetName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

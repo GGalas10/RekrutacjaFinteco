@@ -1,9 +1,23 @@
+@use '@angular/material' as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.dialog-overrides((
+    container-color: rgb(87, 18, 18)
+  ));
+}
+.mat-mdc-list-option .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background{
+  background-color: #337b33 !important;
+  border-color: #337b33 !important;
+}
+.mat-mdc-list-option .mdc-checkbox:hover > .mdc-checkbox__native-control:not(:checked) ~ .mdc-checkbox__background{
+  border-color: #337b33 !important;
+}
 body{
     background-color: #1e1e1e ;
 }
-p,a,span,h1,h2,h3,h4,h5,h6,div *,span *{
+p,a,h1,h2,h3,h4,h5,h6,div *,div{
     color:whitesmoke !important;
-
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
