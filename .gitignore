@@ -375,7 +375,6 @@ FodyWeavers.xsd
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 
 # Compiled files
 *.js
